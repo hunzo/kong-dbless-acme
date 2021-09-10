@@ -1,0 +1,25 @@
+version: '3.7'
+services: 
+  kong:
+    image: kong:${TAG-latest}
+    container_name: kong-dbless
+    env_file: 
+      - kong.env
+    volumes: 
+      - ./kong.yaml:/config/kong.yaml
+    networks:
+      - kong-net
+    ports: 
+      - 127.0.0.1:8001:8001
+      - 127.0.0.1:8444:8444
+      - 80:8000
+      - 443:8443
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 5s
+      timeout: 2s
+      retries: 15
+
+networks: 
+  kong-net:
+    external: true

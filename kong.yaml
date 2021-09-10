@@ -1,0 +1,30 @@
+_format_version: "2.1"
+
+services:
+- name: your-service
+  host: 10.100.100.120
+  port: 8004
+  path: /
+  routes:
+  - name: your-route
+    hosts:
+      - your-domain.name
+    paths:
+      - /ldap
+
+- name: acme-dummy
+  url: http://127.0.0.1:65535
+  routes:
+  - name: acme-dummy
+    protocols:
+      - http
+    paths:
+      - /.well-known/acme-challenge
+
+plugins:
+- name: acme
+  config:
+    account_email: your-email@address
+    domains:
+      - "your-domain.name"
+    tos_accepted: true
